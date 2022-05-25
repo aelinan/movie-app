@@ -1,0 +1,22 @@
+{
+  "name": "movie-app",
+  "version": "1.0.0",
+  "description": "api",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aelinan/movie-app.git"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "andres linan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aelinan/movie-app/issues"
+  },
+  "homepage": "https://github.com/aelinan/movie-app#readme"
+}
