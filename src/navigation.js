@@ -2,10 +2,14 @@ import {getTrendingMoviesPreview} from './main.js'
 import {getCategoriesPreview} from './main.js'
 import {getMoviesByCategory} from './main.js'
 import {getMoviesBySearch} from './main.js'
+import {getTrendingMovies} from './main.js'
+import {getMovieById} from './main.js'
 
-searchFormBtn.addEventListener('click', () => {
-    location.hash = '#search=' + searchFormInput.value;
-});
+searchFormBtn.addEventListener('click', 
+    e => searchFormInput.value !== "" 
+    ? location.hash = 'search=' + searchFormInput.value  
+    : e.preventDefault()
+)
 
 trendingBtn.addEventListener('click', () => {
     location.hash = '#trends'
@@ -71,11 +75,14 @@ function trendingPage() {
     headerCategoryTitle.classList.remove('inactive');
     searchForm.classList.add('inactive');
 
-
     trendingPreviewSection.classList.add('inactive');
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
+
+    headerCategoryTitle.innerHTML = 'Trending';
+
+    getTrendingMovies();
 }
 
 function searchPage() {
@@ -114,6 +121,10 @@ function movieDetailsPage() {
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.add('inactive');
     movieDetailSection.classList.remove('inactive');
+
+    const [_, movieId] = location.hash.split('=');
+
+    getMovieById(movieId)
 
 }
 

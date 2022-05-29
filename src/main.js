@@ -3,6 +3,8 @@ export {getTrendingMoviesPreview}
 export {getCategoriesPreview}
 export {getMoviesByCategory}
 export {getMoviesBySearch}
+export {getTrendingMovies}
+export {getMovieById}
 const api = axios.create({
     baseURL: 'https://api.themoviedb.org/3/',
     headers: {
@@ -19,6 +21,10 @@ function createMovie(movies, container) {
     movies.forEach(movie => {
         const movieContainer = document.createElement('div')  
         movieContainer.classList.add('movie-container');
+
+        movieContainer.addEventListener('click', () => {
+            location.hash = '#movie=' + movie.id;
+        });
 
         const movieImg = document.createElement('img');
         movieImg.classList.add('movie-img');
@@ -52,7 +58,7 @@ function createCategory(categories, container) {
 
         container.appendChild(categoryContainer);
     }); 
-}
+};
 
 async function getTrendingMoviesPreview() {
     const { data } = await api('trending/movie/day');
@@ -62,7 +68,7 @@ async function getTrendingMoviesPreview() {
     console.log({ data, movies});
 
     createMovie(movies, trendingMoviesPreviewList);
-}
+};
 
 async function getCategoriesPreview() {
     const { status, data } = await api('genre/movie/list');
@@ -88,7 +94,7 @@ async function getMoviesByCategory(id) {
 
     createMovie(movies, genericSection);
 
-}
+};
 
 async function getMoviesBySearch(query) {
     const { data } = await api('search/movie', {
@@ -103,4 +109,40 @@ async function getMoviesBySearch(query) {
 
     createMovie(movies, genericSection);
 
+};
+
+async function getTrendingMovies() {
+    const { data } = await api('trending/movie/day');
+
+    const movies = data.results;
+
+    createMovie(movies, genericSection);
+}
+
+
+async function getMovieById(id) {
+    const { data: movie } = await api('movie/' + id);
+
+    const movieImgUrl = 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+    headerSection.style.background = `
+    linear-gradient(
+        180deg, 
+        rgba(0, 0, 0, 0.35) 19.27%, 
+        rgba(0, 0, 0, 0) 29.17%
+    ),
+    url(${movieImgUrl})`;
+    movieDetailTitle.textContent = movie.title;
+    movieDetailDescription.textContent = movie.overview;
+    movieDetailScore.textContent = movie.vote_average;
+
+    createCategory(movie.genres, movieDetailCategoriesList);
+
+    getRelatedMoiesById(id)
+}
+
+async function getRelatedMoiesById(id) {
+    const { data } = await api(`movie/${id}/recommendations`);
+    const relatedMovies = data.results;
+
+    createMovie(relatedMovies, relatedMoviesContainer)
 }
