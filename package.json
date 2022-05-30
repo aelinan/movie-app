@@ -4,7 +4,8 @@
   "description": "api",
   "main": "index.html",
   "scripts": {
-    "start": "http-server -4200",
+    "start": "npm run open",
+    "open": "concurrently \"http-server -a localhost p 1234\" \"open http://localhost:1234/build\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,9 +20,5 @@
   "bugs": {
     "url": "https://github.com/aelinan/movie-app/issues"
   },
-  "homepage": "https://github.com/aelinan/movie-app#readme",
-  "devDependencies": {
-    "concurrently": "^7.2.1",
-    "http-server": "^14.1.0"
-  }
+  "homepage": "https://github.com/aelinan/movie-app#readme"
 }
