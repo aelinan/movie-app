@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/aelinan/movie-app/issues"
   },
-  "homepage": "https://github.com/aelinan/movie-app#readme"
+  "homepage": "https://github.com/aelinan/movie-app#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.1",
+    "http-server": "^14.1.0"
+  }
 }
